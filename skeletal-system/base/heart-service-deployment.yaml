@@ -1,0 +1,43 @@
+# skeletal-system/base/heart-service-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: heart-service
+  labels:
+    app: heart-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: heart-service
+  template:
+    metadata:
+      labels:
+        app: heart-service
+    spec:
+      containers:
+      - name: heart-service
+        image: your-repo/organism-heart-service:latest # IMPORTANT: Replace with your image path
+        imagePullPolicy: IfNotPresent
+        ports:
+        - name: http-metrics # CRITICAL: This named port is the 'nerve ending' for Prometheus.
+          containerPort: 8080
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "64Mi"
+          limits:
+            cpu: "200m"
+            memory: "128Mi"
+        livenessProbe:
+          httpGet:
+            path: /beat
+            port: http-metrics
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /beat
+            port: http-metrics
+          initialDelaySeconds: 5
+          periodSeconds: 5
