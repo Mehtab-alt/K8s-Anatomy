@@ -1,0 +1,19 @@
+# skeletal-system/overlays/production/patch-replicas.yaml
+
+# Patch for the heart-service: increase its capacity to handle more requests.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: heart-service
+spec:
+  replicas: 3 # Scaling up to 3 hearts for higher pulse rate.
+
+---
+
+# Patch for the brain-service: add more processing power for complex tasks.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: brain-service
+spec:
+  replicas: 2 # Scaling up to 2 brains for parallel thinking.
