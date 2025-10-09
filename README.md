@@ -1,7 +1,7 @@
 # K8s-Anatomy
 K8s-Anatomy is a project that models a microservices system as a living organism. Kubernetes forms the skeleton, while the Prometheus stack acts as a central nervous system that enables observation, pain responses (alerting), and autonomic reflexes (autoscaling) for a resilient, self-regulating system.
 
-### The Philosophy
+### Project Philosophy
 
 This project is designed as a clear, step-by-step tutorial. To make the core concepts of monitoring as clear as possible, our organs are initially **decoupled**. This allows you to observe the vital signs of each microservice in isolation, which is the foundational skill for observability.
 
