@@ -21,6 +21,49 @@ To begin, you will need the following tools installed and configured:
 
 ---
 
+## Structure
+
+organism-k8s/
+├── .github/
+│   └── workflows/
+│       └── ci-build-push.yaml
+├── docs/
+│   └── images/
+│       └── dashboard-screenshot.png  # Placeholder for the visual payoff
+├── nervous-system/
+│   ├── prometheus/
+│   │   ├── organism-alerts.yaml
+│   │   └── service-monitor.yaml
+│   └── grafana/
+│       └── dashboards/
+│           └── organism-health.json
+├── organs/
+│   ├── heart-service/
+│   │   ├── Dockerfile
+│   │   ├── go.mod
+│   │   ├── go.sum
+│   │   └── main.go
+│   └── brain-service/
+│       ├── Dockerfile
+│       ├── go.mod
+│       ├── go.sum
+│       └── main.go
+├── skeletal-system/
+│   ├── base/
+│   │   ├── brain-service-deployment.yaml
+│   │   ├── brain-service-service.yaml
+│   │   ├── heart-service-deployment.yaml
+│   │   ├── heart-service-hpa.yaml
+│   │   ├── heart-service-service.yaml
+│   │   └── prometheus-rbac.yaml
+│   └── overlays/
+│       └── production/
+│           ├── kustomization.yaml
+│           └── patch-replicas.yaml
+└── README.md
+
+---
+
 ## A Step-by-Step Guide to Life
 
 Follow these steps to assemble and observe your organism.
