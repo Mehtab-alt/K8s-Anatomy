@@ -1,0 +1,15 @@
+# skeletal-system/base/heart-service-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: heart-service
+  labels:
+    app: heart-service # CRITICAL: This label allows the 'nervous-system' to discover this service.
+spec:
+  selector:
+    app: heart-service
+  ports:
+  - name: http-metrics
+    protocol: TCP
+    port: 8080
+    targetPort: http-metrics
