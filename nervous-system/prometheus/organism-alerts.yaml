@@ -1,0 +1,31 @@
+# nervous-system/prometheus/organism-alerts.yaml
+# This manifest defines the "pain" thresholds for our organism.
+# When these rules are met, an alert is fired to the Alertmanager.
+
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: organism-alerts
+  namespace: monitoring # CRITICAL: Must be in the same namespace as Prometheus.
+  labels:
+    release: prometheus-stack # Ensures the rule is picked up by the Helm release
+spec:
+  groups:
+  - name: organism.rules
+    rules:
+    - alert: HeartServiceHighPulseRate
+      expr: sum(rate(http_requests_total{service="heart-service", job=~".*heart-service.*"}[2m])) > 10
+      for: 1m
+      labels:
+        severity: warning
+      annotations:
+        summary: "High heartbeat rate detected in heart-service"
+        description: "The heart-service is processing over 10 requests/sec. The organism is under high load."
+    - alert: BrainServiceHighCognitiveLoad
+      expr: histogram_quantile(0.95, sum(rate(http_request_duration_seconds_bucket{service="brain-service", job=~".*brain-service.*"}[5m])) by (le)) > 0.7
+      for: 2m
+      labels:
+        severity: critical
+      annotations:
+        summary: "High brain latency detected"
+        description: "95% of 'thoughts' in the brain-service are taking longer than 700ms. Cognitive function is impaired."
