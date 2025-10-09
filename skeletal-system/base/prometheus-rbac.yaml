@@ -1,0 +1,30 @@
+# skeletal-system/base/prometheus-rbac.yaml
+# This grants the nervous system (Prometheus in the 'monitoring' namespace)
+# the ability to connect its nerves to organs in this ('default') namespace.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: prometheus-k8s-scraper
+  namespace: default
+rules:
+- apiGroups: [""]
+  resources:
+  - services
+  - endpoints
+  - pods
+  verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: prometheus-k8s-scraper
+  namespace: default
+subjects:
+- kind: ServiceAccount
+  # This name is determined by the Helm release name ('prometheus-stack') and the chart.
+  name: prometheus-stack-kube-prom-prometheus
+  namespace: monitoring
+roleRef:
+  kind: Role
+  name: prometheus-k8s-scraper
+  apiGroup: rbac.authorization.k8s.io
