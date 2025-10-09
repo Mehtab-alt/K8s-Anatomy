@@ -1,0 +1,21 @@
+# skeletal-system/base/heart-service-hpa.yaml
+# This is the "adrenaline response" for the heart. It automatically scales
+# the heart organ when its metabolic rate (CPU) gets too high.
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: heart-service-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: heart-service
+  minReplicas: 1
+  maxReplicas: 5 # The heart can scale up to 5 instances under extreme stress.
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 80 # Trigger scaling when CPU usage exceeds 80% of its request.
