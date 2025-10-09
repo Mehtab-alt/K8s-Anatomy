@@ -1,0 +1,11 @@
+# skeletal-system/overlays/production/kustomization.yaml
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# Start with the core anatomy defined in the 'base' directory.
+resources:
+- ../../base
+
+# Apply strategic patches for the production environment.
+patchesStrategicMerge:
+- patch-replicas.yaml
